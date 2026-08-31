@@ -25,4 +25,8 @@
     <string name="no_camera_app">Nenhuma câmera disponível</string>
     <string name="obd_ready">Conecte um adaptador OBD-II por Bluetooth</string>
     <string name="no_assistant">Assistente de voz indisponível</string>
+    <string name="playing_now">Reprodução iniciada</string>
+    <string name="playback_paused">Reprodução pausada</string>
+    <string name="volume_level">♫   Volume %1$d%%</string>
+    <string name="brightness_level">Brilho: %1$d%%</string>
 </resources>

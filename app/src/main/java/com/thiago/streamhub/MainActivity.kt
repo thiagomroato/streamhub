@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Build
 import android.content.pm.PackageManager
+import android.media.AudioManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
@@ -25,6 +26,10 @@ class MainActivity : AppCompatActivity() {
     private var showInstalledOnly = false
     private var showFavoritesOnly = false
     private var query = ""
+    private var isPlaying = false
+    private var volumeLevel = 50
+    private var nightMode = false
+    private var brightnessLevel = 0.75f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         requestVehiclePermissions()
         binding.clockText.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
         setupVehicleActions()
+        setupInteractiveControls()
 
         adapter = ServiceAdapter(
             items = StreamingCatalog.services,
@@ -131,6 +137,46 @@ class MainActivity : AppCompatActivity() {
             catch (_: ActivityNotFoundException) { Toast.makeText(this, R.string.no_assistant, Toast.LENGTH_SHORT).show() }
         }
         binding.navSettings.setOnClickListener { startActivity(Intent(Settings.ACTION_SETTINGS)) }
+    }
+
+    private fun setupInteractiveControls() {
+        binding.musicCard.setOnClickListener { binding.navMusic.performClick() }
+        binding.navigationCard.setOnClickListener { binding.navGps.performClick() }
+        binding.speedCard.setOnClickListener {
+            val current = binding.speedValue.text.toString().toIntOrNull() ?: 72
+            binding.speedValue.text = ((current + 5) % 131).toString()
+        }
+        binding.mediaPlay.setOnClickListener {
+            isPlaying = !isPlaying
+            binding.mediaPlay.text = if (isPlaying) "Ⅱ" else "▶"
+            binding.mediaControls.text = if (isPlaying) "|◀       Ⅱ       ▶|" else "|◀       ▶       ▶|"
+            binding.trackTitle.text = if (isPlaying) "Reproduzindo agora" else "Dream It Possible"
+            Toast.makeText(this, if (isPlaying) R.string.playing_now else R.string.playback_paused, Toast.LENGTH_SHORT).show()
+        }
+        binding.mediaPrevious.setOnClickListener { binding.trackTitle.text = "Faixa anterior" }
+        binding.mediaNext.setOnClickListener { binding.trackTitle.text = "Próxima faixa" }
+        binding.volumeDown.setOnClickListener { changeVolume(-10) }
+        binding.volumeUp.setOnClickListener { changeVolume(10) }
+        binding.brightnessControl.setOnClickListener {
+            brightnessLevel = if (brightnessLevel > 0.5f) 0.35f else 0.85f
+            window.attributes = window.attributes.apply { screenBrightness = brightnessLevel }
+            Toast.makeText(this, getString(R.string.brightness_level, (brightnessLevel * 100).toInt()), Toast.LENGTH_SHORT).show()
+        }
+        binding.nightMode.setOnClickListener {
+            nightMode = !nightMode
+            binding.nightMode.text = if (nightMode) "☀" else "☾"
+            binding.nightMode.setTextColor(getColor(if (nightMode) R.color.accent_blue else R.color.text_primary))
+            binding.root.setBackgroundColor(getColor(if (nightMode) R.color.night_background else R.color.background))
+        }
+        binding.shortcutPanel.setOnClickListener { binding.navCamera.performClick() }
+    }
+
+    private fun changeVolume(delta: Int) {
+        volumeLevel = (volumeLevel + delta).coerceIn(0, 100)
+        val audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+        val max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (max * volumeLevel) / 100, 0)
+        binding.volumeLevel.text = getString(R.string.volume_level, volumeLevel)
     }
 
     private fun refreshCatalog() {
