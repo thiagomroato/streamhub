@@ -15,14 +15,14 @@
         android:orientation="vertical"
         android:paddingVertical="10dp">
         <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="☰" android:textColor="@color/text_primary" android:textSize="26sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:background="@drawable/nav_selected" android:gravity="center" android:text="⌂\nHome" android:textColor="@color/accent_blue" android:textSize="12sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="⌖\nGPS" android:textColor="@color/text_primary" android:textSize="12sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="♫\nMúsica" android:textColor="@color/text_primary" android:textSize="12sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="♢\nBluetooth" android:textColor="@color/text_primary" android:textSize="12sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="▣\nCâmera" android:textColor="@color/text_primary" android:textSize="12sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="▱\nOBD" android:textColor="@color/text_primary" android:textSize="12sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="♙\nIA" android:textColor="@color/text_primary" android:textSize="12sp" />
-        <TextView android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="⚙\nConfig." android:textColor="@color/text_primary" android:textSize="12sp" />
+        <TextView android:id="@+id/navHome" android:layout_width="match_parent" android:layout_height="54dp" android:background="@drawable/nav_selected" android:gravity="center" android:text="⌂\nHome" android:textColor="@color/accent_blue" android:textSize="12sp" />
+        <TextView android:id="@+id/navGps" android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="⌖\nGPS" android:textColor="@color/text_primary" android:textSize="12sp" />
+        <TextView android:id="@+id/navMusic" android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="♫\nMúsica" android:textColor="@color/text_primary" android:textSize="12sp" />
+        <TextView android:id="@+id/navBluetooth" android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="♢\nBluetooth" android:textColor="@color/text_primary" android:textSize="12sp" />
+        <TextView android:id="@+id/navCamera" android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="▣\nCâmera" android:textColor="@color/text_primary" android:textSize="12sp" />
+        <TextView android:id="@+id/navObd" android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="▱\nOBD" android:textColor="@color/text_primary" android:textSize="12sp" />
+        <TextView android:id="@+id/navAssistant" android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="♙\nIA" android:textColor="@color/text_primary" android:textSize="12sp" />
+        <TextView android:id="@+id/navSettings" android:layout_width="match_parent" android:layout_height="54dp" android:gravity="center" android:text="⚙\nConfig." android:textColor="@color/text_primary" android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout

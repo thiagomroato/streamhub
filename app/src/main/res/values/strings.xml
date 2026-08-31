@@ -21,4 +21,8 @@
     <string name="now_playing">CENTRAL MULTIMÍDIA</string>
     <string name="ready_to_drive">Pronto para sua próxima viagem</string>
     <string name="quick_access">Acesso rápido</string>
+    <string name="no_music_app">Nenhum app de música disponível</string>
+    <string name="no_camera_app">Nenhuma câmera disponível</string>
+    <string name="obd_ready">Conecte um adaptador OBD-II por Bluetooth</string>
+    <string name="no_assistant">Assistente de voz indisponível</string>
 </resources>

@@ -2,6 +2,7 @@ package com.thiago.streamhub
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.provider.Settings
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.clockText.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+        setupVehicleActions()
 
         adapter = ServiceAdapter(
             items = StreamingCatalog.services,
@@ -67,6 +69,36 @@ class MainActivity : AppCompatActivity() {
             refreshCatalog()
         }
         refreshCatalog()
+    }
+
+    private fun setupVehicleActions() {
+        binding.navGps.setOnClickListener {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=postos+de+combustível")))
+            } catch (_: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://maps.google.com")))
+            }
+        }
+        binding.navMusic.setOnClickListener {
+            val musicIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_MUSIC)
+            try { startActivity(musicIntent) } catch (_: ActivityNotFoundException) {
+                Toast.makeText(this, R.string.no_music_app, Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.navBluetooth.setOnClickListener { startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS)) }
+        binding.navCamera.setOnClickListener {
+            try { startActivity(Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)) }
+            catch (_: ActivityNotFoundException) { Toast.makeText(this, R.string.no_camera_app, Toast.LENGTH_SHORT).show() }
+        }
+        binding.navObd.setOnClickListener {
+            Toast.makeText(this, R.string.obd_ready, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+        }
+        binding.navAssistant.setOnClickListener {
+            try { startActivity(Intent(Intent.ACTION_VOICE_COMMAND)) }
+            catch (_: ActivityNotFoundException) { Toast.makeText(this, R.string.no_assistant, Toast.LENGTH_SHORT).show() }
+        }
+        binding.navSettings.setOnClickListener { startActivity(Intent(Settings.ACTION_SETTINGS)) }
     }
 
     private fun refreshCatalog() {
