@@ -43,7 +43,7 @@
                     <LinearLayout android:id="@+id/speedCard" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VELOCIDADE" android:textColor="@color/text_primary" android:textSize="13sp" />
                         <TextView android:id="@+id/speedValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="72" android:textColor="@color/accent_blue" android:textSize="58sp" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="km/h   •   TRIP A 128.6 km" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/speedMeta" android:text="km/h   •   GPS aguardando" android:textColor="@color/text_secondary" android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="match_parent" android:layout_margin="4dp" android:layout_weight="1" app:cardBackgroundColor="@color/panel_blue" app:cardCornerRadius="14dp" app:cardElevation="0dp">
@@ -56,7 +56,7 @@
                 <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="match_parent" android:layout_margin="4dp" android:layout_weight="1" app:cardBackgroundColor="@color/panel_blue" app:cardCornerRadius="14dp" app:cardElevation="0dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="14dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="STATUS DO VEÍCULO" android:textColor="@color/text_primary" android:textSize="13sp" />
-                        <TextView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:gravity="center_vertical" android:text="♨  Temperatura                 90 °C\n\n▣  Tensão da Bateria           13.9 V\n\n♧  Carga do Motor                 38 %\n\n⛽  Consumo Médio             10.8 km/L" android:textColor="@color/text_primary" android:textSize="12sp" />
+                        <TextView android:id="@+id/gpsDetails" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:gravity="center_vertical" android:text="GPS: aguardando sinal..." android:textColor="@color/text_primary" android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -74,7 +74,7 @@
                     <LinearLayout android:id="@+id/navigationCard" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="NAVEGAÇÃO" android:textColor="@color/text_primary" android:textSize="13sp" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:text="➜  300 m" android:textColor="@color/text_primary" android:textSize="20sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Av. das Nações\nUnidas\n\n15 min  •  7.5 km  •  17:20" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                        <TextView android:id="@+id/gpsRouteStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Posição GPS aguardando..." android:textColor="@color/text_secondary" android:textSize="12sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="match_parent" android:layout_margin="4dp" android:layout_weight="1" app:cardBackgroundColor="@color/panel_blue" app:cardCornerRadius="14dp" app:cardElevation="0dp">

@@ -29,4 +29,7 @@
     <string name="playback_paused">Reprodução pausada</string>
     <string name="volume_level">♫   Volume %1$d%%</string>
     <string name="brightness_level">Brilho: %1$d%%</string>
+    <string name="gps_speed_meta">km/h • precisão %1$s</string>
+    <string name="gps_details">GPS ATIVO\nLat: %.6f\nLon: %.6f\nAltitude: %3$s\nDireção: %4$s\nPrecisão: %5$s</string>
+    <string name="gps_route_status">Posição atual\n%.6f, %.6f</string>
 </resources>

@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.os.Build
 import android.content.pm.PackageManager
 import android.media.AudioManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
@@ -30,6 +33,12 @@ class MainActivity : AppCompatActivity() {
     private var volumeLevel = 50
     private var nightMode = false
     private var brightnessLevel = 0.75f
+    private lateinit var locationManager: LocationManager
+    private val locationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) = updateGpsDashboard(location)
+        override fun onProviderEnabled(provider: String) = updateGpsStatus("GPS ativo: $provider")
+        override fun onProviderDisabled(provider: String) = updateGpsStatus("GPS desativado: $provider")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         binding.clockText.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
         setupVehicleActions()
         setupInteractiveControls()
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
         adapter = ServiceAdapter(
             items = StreamingCatalog.services,
@@ -79,6 +89,64 @@ class MainActivity : AppCompatActivity() {
             refreshCatalog()
         }
         refreshCatalog()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startGpsUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (::locationManager.isInitialized) locationManager.removeUpdates(locationListener)
+    }
+
+    private fun startGpsUpdates() {
+        if (!::locationManager.isInitialized) return
+        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            updateGpsStatus("GPS aguardando permissão")
+            return
+        }
+        try {
+            val providers = listOf(LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER)
+            providers.filter { locationManager.isProviderEnabled(it) }.forEach {
+                locationManager.requestLocationUpdates(it, 1000L, 1f, locationListener)
+                locationManager.getLastKnownLocation(it)?.let { location -> updateGpsDashboard(location) }
+            }
+            if (providers.none { locationManager.isProviderEnabled(it) }) updateGpsStatus("Ative a localização do tablet")
+        } catch (_: SecurityException) {
+            updateGpsStatus("Permissão de localização necessária")
+        }
+    }
+
+    private fun updateGpsDashboard(location: Location) {
+        val speedKmh = if (location.hasSpeed()) location.speed * 3.6f else 0f
+        val speedText = speedKmh.toInt().toString()
+        binding.speedValue.text = speedText
+        val accuracy = if (location.hasAccuracy()) "±${location.accuracy.toInt()} m" else "precisão n/d"
+        val altitude = if (location.hasAltitude()) "${location.altitude.toInt()} m" else "n/d"
+        val bearing = if (location.hasBearing()) "${location.bearing.toInt()}°" else "n/d"
+        binding.speedMeta.text = getString(R.string.gps_speed_meta, accuracy)
+        binding.gpsDetails.text = getString(
+            R.string.gps_details,
+            location.latitude,
+            location.longitude,
+            altitude,
+            bearing,
+            accuracy
+        )
+        binding.gpsRouteStatus.text = getString(R.string.gps_route_status, location.latitude, location.longitude)
+    }
+
+    private fun updateGpsStatus(status: String) {
+        binding.speedMeta.text = status
+        binding.gpsDetails.text = status
+        binding.gpsRouteStatus.text = status
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 410) startGpsUpdates()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -142,10 +210,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupInteractiveControls() {
         binding.musicCard.setOnClickListener { binding.navMusic.performClick() }
         binding.navigationCard.setOnClickListener { binding.navGps.performClick() }
-        binding.speedCard.setOnClickListener {
-            val current = binding.speedValue.text.toString().toIntOrNull() ?: 72
-            binding.speedValue.text = ((current + 5) % 131).toString()
-        }
+        binding.speedCard.setOnClickListener { startGpsUpdates() }
         binding.mediaPlay.setOnClickListener {
             isPlaying = !isPlaying
             binding.mediaPlay.text = if (isPlaying) "Ⅱ" else "▶"
