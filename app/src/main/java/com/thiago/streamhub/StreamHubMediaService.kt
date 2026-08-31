@@ -3,10 +3,8 @@ package com.thiago.streamhub
 import android.content.Intent
 import android.os.Bundle
 import androidx.media.MediaBrowserServiceCompat
-import androidx.media.session.MediaButtonReceiver
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
-import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 
@@ -27,9 +25,6 @@ class StreamHubMediaService : MediaBrowserServiceCompat() {
                 override fun onStop() {
                     isActive = false
                     setPlaybackState(PlaybackStateCompat.Builder().setState(PlaybackStateCompat.STATE_STOPPED, 0L, 0f).build())
-                }
-                override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
-                    return MediaButtonReceiver.handleIntent(this@StreamHubMediaService, mediaSession) || super.onMediaButtonEvent(mediaButtonEvent)
                 }
             })
             setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS or MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS)
