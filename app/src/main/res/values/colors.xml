@@ -4,6 +4,9 @@
     <color name="accent">#E50914</color>
     <color name="accent_blue">#55B8FF</color>
     <color name="media_card">#202A35</color>
+    <color name="panel_blue">#101D31</color>
+    <color name="panel_purple">#22183A</color>
+    <color name="panel_border">#315477</color>
     <color name="text_primary">#FFFFFF</color>
     <color name="text_secondary">#9A9DA6</color>
 </resources>
