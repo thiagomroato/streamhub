@@ -3,4 +3,17 @@
     <string name="title">Meus Streamings</string>
     <string name="subtitle">Toque para abrir o app oficial</string>
     <string name="not_installed_action">Instalar</string>
+    <string name="open_action">Abrir</string>
+    <string name="installed_status">Instalado en este dispositivo</string>
+    <string name="available_status">Disponible para instalar</string>
+    <string name="search_hint">Buscar servicio</string>
+    <string name="installed_filter">Instalados</string>
+    <string name="favorites_filter">Favoritos</string>
+    <string name="clear_filter">Limpiar</string>
+    <string name="empty_state">No hay servicios que coincidan. Prueba otra búsqueda o limpia los filtros.</string>
+    <string name="add_favorite">Añadir a favoritos</string>
+    <string name="remove_favorite">Quitar de favoritos</string>
+    <string name="added_favorite">Añadido a favoritos</string>
+    <string name="removed_favorite">Eliminado de favoritos</string>
+    <string name="catalog_count">%1$d mostrados · %2$d instalados</string>
 </resources>
