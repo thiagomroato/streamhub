@@ -5,6 +5,8 @@ import android.content.Intent
 import android.provider.Settings
 import android.net.Uri
 import android.os.Bundle
+import android.os.Build
+import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
@@ -28,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enterStandaloneMode()
+        requestVehiclePermissions()
         binding.clockText.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
         setupVehicleActions()
 
@@ -69,6 +73,34 @@ class MainActivity : AppCompatActivity() {
             refreshCatalog()
         }
         refreshCatalog()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) enterStandaloneMode()
+    }
+
+    private fun enterStandaloneMode() {
+        window.decorView.systemUiVisibility = (
+            android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+                or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            )
+    }
+
+    private fun requestVehiclePermissions() {
+        val permissions = buildList {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                add(android.Manifest.permission.BLUETOOTH_CONNECT)
+                add(android.Manifest.permission.BLUETOOTH_SCAN)
+            }
+            add(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            add(android.Manifest.permission.CAMERA)
+        }.filter { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }
+        if (permissions.isNotEmpty()) requestPermissions(permissions.toTypedArray(), 410)
     }
 
     private fun setupVehicleActions() {
