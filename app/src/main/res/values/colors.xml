@@ -2,6 +2,8 @@
     <color name="background">#0E0F13</color>
     <color name="surface">#1A1C22</color>
     <color name="accent">#E50914</color>
+    <color name="accent_blue">#55B8FF</color>
+    <color name="media_card">#202A35</color>
     <color name="text_primary">#FFFFFF</color>
     <color name="text_secondary">#9A9DA6</color>
 </resources>

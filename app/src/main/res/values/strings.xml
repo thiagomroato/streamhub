@@ -16,4 +16,9 @@
     <string name="added_favorite">Añadido a favoritos</string>
     <string name="removed_favorite">Eliminado de favoritos</string>
     <string name="catalog_count">%1$d mostrados · %2$d instalados</string>
+    <string name="driver_greeting">Olá, motorista</string>
+    <string name="drive_mode">MODO CONDUÇÃO ATIVO</string>
+    <string name="now_playing">CENTRAL MULTIMÍDIA</string>
+    <string name="ready_to_drive">Pronto para sua próxima viagem</string>
+    <string name="quick_access">Acesso rápido</string>
 </resources>

@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thiago.streamhub.databinding.ActivityMainBinding
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.clockText.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
 
         adapter = ServiceAdapter(
             items = StreamingCatalog.services,
